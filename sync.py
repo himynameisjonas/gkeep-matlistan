@@ -3,6 +3,8 @@ import requests
 import os
 import uuid
 import json
+import schedule
+import time
 
 def getMatlistanToken():
     response = requests.post("https://api2.matlistan.se/Sessions", json={
@@ -50,10 +52,17 @@ def getKeepToken():
     return fh.read()
 
 def keepLogin():
+    global loggedIn
+    global keep
+
+    if loggedIn:
+        print("already logged in")
+        return keep
+
+    print("logging in to Google Keep")
     keep = gkeepapi.Keep()
     token = getKeepToken()
     state = loadState()
-    loggedIn = False
 
     if token:
         try:
@@ -77,26 +86,38 @@ def keepLogin():
     storeKeepToken(token)
     return keep
 
+def sync():
+    note_list = keep.get(os.environ.get("KEEP_LIST_ID"))
+    list_items = note_list.unchecked
 
+    if len(list_items) == 0:
+        storeState(keep)
+        print("No new items to sync")
+        return
+
+
+    try:
+        matlistan_token = getMatlistanToken()
+
+        for item in list_items:
+            print("syncing to Matlistan:", item.text)
+            addItemToMatlistan(item.text, matlistan_token)
+            item.checked = True
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+    finally:
+        keep.sync()
+        storeState(keep)
+
+print("Booting up")
+loggedIn = False
 keep = keepLogin()
-note_list = keep.get(os.environ.get("KEEP_LIST_ID"))
-list_items = note_list.unchecked
 
-if len(list_items) == 0:
-  storeState(keep)
-  print("No new items to sync")
-  exit()
+print ("Starting on-off sync")
+sync()
 
-
-try:
-    matlistan_token = getMatlistanToken()
-
-    for item in list_items:
-        print("syncing to Matlistan:", item.text)
-        addItemToMatlistan(item.text, matlistan_token)
-        item.checked = True
-except Exception as e:
-    print(f"An error occurred: {str(e)}")
-finally:
-    keep.sync()
-    storeState(keep)
+print("Starting continuous sync")
+schedule.every(45).minutes.do(sync)
+while True:
+    schedule.run_pending()
+    time.sleep(10)
