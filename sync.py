@@ -92,6 +92,7 @@ def sync():
 
     if len(list_items) == 0:
         storeState(keep)
+        ping_success_webhook()
         print("No new items to sync")
         return
 
@@ -108,6 +109,12 @@ def sync():
     finally:
         keep.sync()
         storeState(keep)
+        ping_success_webhook()
+
+def ping_success_webhook():
+    if os.environ.get("SUCCESS_WEBHOOK_URL"):
+        requests.get(os.environ.get("SUCCESS_WEBHOOK_URL"))
+
 
 print("Booting up")
 loggedIn = False

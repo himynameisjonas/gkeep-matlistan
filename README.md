@@ -21,6 +21,10 @@ Make sure you have the following installed before running the project:
     - `GOOGLE_PASSWORD`: The password for your Google account.
     - `KEEP_LIST_ID`: The ID of the Google Keep note where the items will be retrieved from.
 
+    Optionally, you can also provide the following variables:
+    - `SYNC_INTERVAL`: The number of minutes between each synchronization. The default value is `45`.
+    - `SUCCESS_WEBHOOK_URL`: A webhook URL that will be called when the synchronization is successful. The default value is `""`.
+
 3. Run the Docker container using Docker Compose:
 
    ```
@@ -30,10 +34,6 @@ Make sure you have the following installed before running the project:
    This will build the Docker image and start the synchronization process.
 
 4. The synchronization process will run once immediately and then continue to run every 45 minutes.
-
-## Customization
-
--  To change the synchronization interval, set the `SYNC_INTERVAL` environment variable to the desired number of minutes. The default value is `45`.
 
 ## Persistence
 
