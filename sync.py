@@ -116,7 +116,9 @@ keep = keepLogin()
 print ("Starting on-off sync")
 sync()
 
-print("Starting continuous sync")
+interval = int(os.environ.get("SYNC_INTERVAL", 45))
+print("Starting continuous sync every", interval, "minutes")
+
 schedule.every(45).minutes.do(sync)
 while True:
     schedule.run_pending()
