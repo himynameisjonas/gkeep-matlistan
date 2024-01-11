@@ -11,7 +11,7 @@ Make sure you have the following installed before running the project:
 
 ## Getting Started
 
-1. Clone the repository to your local machine.
+1. Create a docker-compose.yml file and copy the contents of the [docker-compose.yml](https://github.com/himynameisjonas/gkeep-matlistan/blob/main/docker-compose.yml) file into it.
 
 2. Create a file named `.env` in the root directory and provide the necessary environment variables. The required variables are:
     - `MATLISTAN_EMAIL`: The email address associated with your Matlistan account.
@@ -21,7 +21,7 @@ Make sure you have the following installed before running the project:
     - `GOOGLE_PASSWORD`: The password for your Google account.
     - `KEEP_LIST_ID`: The ID of the Google Keep note where the items will be retrieved from.
 
-3. Build and run the Docker containers using Docker Compose:
+3. Run the Docker container using Docker Compose:
 
    ```
    docker-compose up -d
