@@ -19,6 +19,7 @@ Make sure you have the following installed before running the project:
     - `MATLISTAN_LIST_ID`: The ID of the Matlistan list where the items will be added.
     - `GOOGLE_EMAIL`: The email address associated with your Google account.
     - `GOOGLE_PASSWORD`: The password for your Google account.
+    - `KEEP_LIST_ID`: The ID of the Google Keep note where the items will be retrieved from.
 
 3. Build and run the Docker containers using Docker Compose:
 
