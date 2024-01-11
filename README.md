@@ -1,6 +1,6 @@
 # gkeep-matlistan-sync
 
-This project consists of a Docker Compose setup for synchronizing items from [Google Keep](https://keep.google.com/) to [Matlistan](https://www.matlistan.se). The synchronization will fetch all unchecked items from the specified Google Keep note and add them to the specified Matlistan list. It will run every 45 minutes by default.
+This project is designed to synchronize items from [Google Keep](https://keep.google.com/) to [Matlistan](https://www.matlistan.se). The synchronization process retrieves all unchecked items from a specified Google Keep note and adds them to the designated Matlistan list. By default, the synchronization runs every 45 minutes.
 
 ## Prerequisites
 
