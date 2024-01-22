@@ -87,6 +87,7 @@ def keepLogin():
     return keep
 
 def sync():
+    keep.sync()
     note_list = keep.get(os.environ.get("KEEP_LIST_ID"))
     list_items = note_list.unchecked
 
